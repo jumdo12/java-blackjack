@@ -36,11 +36,16 @@ public class CardGroup {
         sum += aceCount * ACE_LOW_SCORE;
         int aceAdditionScore = ACE_HIGH_SCORE - ACE_LOW_SCORE;
         int count = 0;
-        while (!isOverHitRule(sum + aceAdditionScore) && count < aceCount) {
+
+        while (isAbleToAddAdditionalAceScore(sum,aceAdditionScore,count,aceCount)) {
             count++;
             sum += aceAdditionScore;
         }
         return count;
+    }
+
+    private boolean isAbleToAddAdditionalAceScore(int sum,int aceAdditionScore,int currCount, int aceCount) {
+        return !isOverHitRule(sum + aceAdditionScore) && currCount < aceCount;
     }
 
     private boolean isOverHitRule(int score) {
