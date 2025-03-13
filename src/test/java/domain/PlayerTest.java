@@ -21,7 +21,6 @@ public class PlayerTest {
         final String name = "윌슨";
         final List<Card> cards = List.of(new Card(DIAMOND, ACE), new Card(DIAMOND, EIGHT));
         final CardGroup cardGroup = new CardGroup(cards);
-        CardGenerator randomCardGenerator = new RandomCardGenerator();
 
         //when
         final Player player = new Player(name, cardGroup);
@@ -60,8 +59,6 @@ public class PlayerTest {
         final String name3 = "포비";
         final List<Card> cards3 = List.of(new Card(DIAMOND, FIVE), new Card(HEART, TWO));
         final CardGroup cardGroup3 = new CardGroup(cards3);
-
-        final RandomCardGenerator randomCardGenerator = new RandomCardGenerator();
 
         //when
         final Player player1 = new Player(name1, cardGroup1);
