@@ -3,7 +3,7 @@ package domain.bet;
 import java.util.Objects;
 
 public class Bet {
-    private static final int BLACKJACK_PRIZE_RATE = 15;
+    private static final double BLACKJACK_PRIZE_RATE = 1.5;
     private static final int DRAW_BET_PRIZE = 0;
 
     private final int bettingAmount;
@@ -33,7 +33,7 @@ public class Bet {
     }
 
     public int getBlackJackPrize() {
-        return bettingAmount * BLACKJACK_PRIZE_RATE / 10;
+        return (int) (bettingAmount * BLACKJACK_PRIZE_RATE);
     }
 
     public int getWinningPrize() {
