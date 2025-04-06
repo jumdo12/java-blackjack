@@ -1,6 +1,9 @@
 package domain.card;
 
 import domain.card.Strategy.*;
+import domain.card.decorator.BonusScoringStrategy;
+import domain.card.decorator.LoggingScoringStrategy;
+import domain.card.decorator.ScoringStrategyDecorator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -9,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 
 
-class HandTest {
+class StrategyHandTest {
 
     @Nested
     class CardAddTest{
@@ -57,6 +60,43 @@ class HandTest {
             int score = hand.calcScore(scoringStrategy);
 
             assertThat(score).isEqualTo(7);
+        }
+    }
+
+    @Nested
+    class DecoratorHandCardScore{
+
+        @Test
+        void decoratorTest(){
+            StrategyHand hand = new StrategyHand();
+            ScoreTable blackJackTable = new BlackJackScoreTable();
+            ScoringStrategy blackJackStrategy = new BlackJackScore(blackJackTable);
+
+            hand.receive(new Card(Shape.CLOVER, Signature.TEN));
+
+            ScoringStrategyDecorator scoringStrategyDecorator =
+                    new BonusScoringStrategy(
+                        new LoggingScoringStrategy(blackJackStrategy));
+
+            Assertions.assertDoesNotThrow(() -> hand.calcScore(scoringStrategyDecorator));
+        }
+
+        @Test
+        void decoratorTest2(){
+            StrategyHand hand = new StrategyHand();
+            ScoreTable blackJackTable = new BlackJackScoreTable();
+            ScoringStrategy blackJackStrategy = new BlackJackScore(blackJackTable);
+
+            hand.receive(new Card(Shape.CLOVER, Signature.TEN));
+
+            ScoringStrategyDecorator scoringStrategyDecorator =
+                    new LoggingScoringStrategy(
+                            new BonusScoringStrategy(
+                                    blackJackStrategy
+                            )
+                    );
+
+            Assertions.assertDoesNotThrow(() -> hand.calcScore(scoringStrategyDecorator));
         }
     }
 }
